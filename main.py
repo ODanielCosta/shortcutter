@@ -1,11 +1,17 @@
 import keyboard as kb
 import pygetwindow as gw
 import pyautogui as autog
+import pywin
+import psutil
 
 print("  +------------------------+")
 print("  |       Shortcutter      |")
 print("  |       Version 1.0      |")
 print("  +------------------------+")
+
+#PROCESSOS###############
+for proc in psutil.process_iter(['pid', 'name']):
+    print(proc.info)
 
 
 #SHORTCUTS###############

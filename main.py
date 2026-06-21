@@ -1,8 +1,10 @@
 import keyboard as kb
 import pygetwindow as gw
 import pyautogui as autog
-import pywin
-import psutil
+import psutil #Vai buscar processos e info
+import win32gui
+import win32process
+import win32api
 
 print("  +------------------------+")
 print("  |       Shortcutter      |")
@@ -11,8 +13,11 @@ print("  +------------------------+")
 
 #PROCESSOS###############
 for proc in psutil.process_iter(['pid', 'name']):
-    print(proc.info)
+    if proc.info["name"]== "brave.exe":
+        print(proc.info)
 
+for janela in win32gui.EnumWindows(hwnd,extra):
+    print(janela)
 
 #SHORTCUTS###############
 #

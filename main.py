@@ -13,20 +13,24 @@ print("         +------------------------+")
 
 #PROCESSOS###############
 brave_pid = []
+brave_hwnd = []
 
 #1 psutil → processos (PID)
 for proc in psutil.process_iter(['pid', 'name']):
     if proc.info["name"]== "brave.exe":
         brave_pid.append(proc.info['pid'])
-print(brave_pid)
+#print(brave_pid)
 
 #3 GetWindowThreadProcessId → liga HWND → PID
 def callback(hwnd, extra):
-    estado = None
+    
     pid = win32process.GetWindowThreadProcessId(hwnd)[1]
-    if pid in brave_pid:
+    if pid in brave_pid and "Default IME" not in win32gui.GetWindowText(hwnd) and "MSCTFIME UI" not in win32gui.GetWindowText(hwnd) and len(win32gui.GetWindowText(hwnd)) > 1:
         #win32gui.IsIconic deteta se está minimizado
-        print(f"hwnd: {hwnd} | Minimizado: {win32gui.IsIconic(hwnd)} | Processo: {pid}")
+        print(f"hwnd: {hwnd} | Minimizado: {win32gui.IsIconic(hwnd)} | {win32gui.GetWindowText(hwnd)} | Processo: {pid}")
+
+        brave_hwnd.append(hwnd)
+        print(brave_hwnd)
 
 
 #2 EnumWindows → janelas (HWND (Handle Window))

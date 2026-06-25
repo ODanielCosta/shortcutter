@@ -6,10 +6,10 @@ import win32gui #Vai buscar o Handle Window
 import win32process #Liga o Handle Window a um processo
 import win32api
 
-print("  +------------------------+")
-print("  |       Shortcutter      |")
-print("  |       Version 1.0      |")
-print("  +------------------------+")
+print("         +------------------------+")
+print("         |       Shortcutter      |")
+print("         |       Version 1.0      |")
+print("         +------------------------+")
 
 #PROCESSOS###############
 brave_pid = []
@@ -22,12 +22,18 @@ print(brave_pid)
 
 #3 GetWindowThreadProcessId → liga HWND → PID
 def callback(hwnd, extra):
+    estado = None
     pid = win32process.GetWindowThreadProcessId(hwnd)[1]
     if pid in brave_pid:
-        print(hwnd, pid)
+        #win32gui.IsIconic deteta se está minimizado
+        print(f"hwnd: {hwnd} | Minimizado: {win32gui.IsIconic(hwnd)} | Processo: {pid}")
+
 
 #2 EnumWindows → janelas (HWND (Handle Window))
 win32gui.EnumWindows(callback,None)
+
+#VERIFICAR ESTADO #########
+
 
 
 
